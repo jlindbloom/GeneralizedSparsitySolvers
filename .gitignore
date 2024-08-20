@@ -5,6 +5,8 @@ __pycache__/
 
 *_dev/
 *.DS_Store
+*.png
+*.eps
 
 # C extensions
 *.so

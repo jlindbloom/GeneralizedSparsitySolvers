@@ -1,0 +1,7 @@
+notebook
+numpy==1.26.3
+scipy==1.11.4
+matplotlib==3.8.2
+fastprogress==1.0.3
+
+

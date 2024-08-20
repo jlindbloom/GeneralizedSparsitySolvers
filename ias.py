@@ -204,7 +204,7 @@ class IASSolver:
             if x_update_device == "cpu":
             
                 # Build current Rpinv operator
-                Rpinv = self.pdata["Rpinv_factory"](theta, prev_eval=self.Rpinv_prev_eval, prev_eval_t=self.Rpinv_prev_eval_t)
+                Rpinv = self.pdata["Rpinv_factory"](theta)
                 
                 # Solve using transformed CGLS
                 cgls_solve = jlinops.trlstsq_standard_form(Ftilde, ytilde, Rpinv=Rpinv, R=Rtilde,
@@ -220,11 +220,8 @@ class IASSolver:
                 return cgls_solve["x"], cgls_solve["n_iters"], Rpinv_cg_matvecs, Rpinv_cg_rmatvecs
 
             else:
-
-                prev_eval = None
-                prev_eval_t = None
                     
-                Rpinv = self.pdata["Rpinv_factory"](theta, prev_eval=prev_eval, prev_eval_t=prev_eval_t)
+                Rpinv = self.pdata["Rpinv_factory"](theta)
 
                 print(Rpinv.Rwpinv.prev_eval)
                 if Rpinv.device == "gpu":
@@ -247,8 +244,8 @@ class IASSolver:
 
              
                 # Only if it has this attribute
-                Rpinv_cg_matvecs = None
-                Rpinv_cg_rmatvecs = None
+                Rpinv_cg_matvecs = 0
+                Rpinv_cg_rmatvecs = 0
                 if hasattr(Rpinv, 'matvec_cg_hist'):
                     Rpinv_cg_matvecs = sum(Rpinv.matvec_cg_hist)
                     Rpinv_cg_rmatvecs = sum(Rpinv.rmatvec_cg_hist)
